@@ -15,5 +15,4 @@ Insert receivers into the `receivers` array as the following example:
 
 `array("chatid" => "​​XXXXXXXX")`
 
-* `chatid`: (required) Id of user/group
-* `operator`: (optional) Email address(in LiveHelperChat) of the operator that will log into the chat
+* `chatid`: (required) Id of user/group found by running https://api.telegram.org/botxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/getUpdates
