@@ -13,7 +13,7 @@ Create a [telegram bot](https://core.telegram.org/bots) and put your token in th
 
 Insert receivers into the `receivers` array as the following example:
 
-`array("chatid" => "​​XXXXXXXX", "operator" => "test@example.org")`
+`array("chatid" => "​​XXXXXXXX")`
 
 * `chatid`: (required) Id of user/group
 * `operator`: (optional) Email address(in LiveHelperChat) of the operator that will log into the chat
