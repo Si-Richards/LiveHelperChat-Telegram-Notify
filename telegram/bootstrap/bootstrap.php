@@ -26,30 +26,15 @@ class erLhcoreClassExtensionTelegram {
 		$url = 'https://api.telegram.org/bot'.$conf['telegramBot'].'/sendMessage?parse_mode=Markdown';
 		$chat = $params['chat'];
 		
-        foreach ($conf['receivers'] as $receiver) {
+      foreach ($conf['receivers'] as $receiver) {
 
-            $internalurl = $url.$receiver['chatid'];
-			$text = "NEW CHAT REQUEST\nName: ";
+            $internalurl = $url."&chat_id=xxxxxxxxx";
+			$text = "=== NEW CHAT REQUEST ===\nNAME: ";
 			$text = (isset($chat->nick)) ? $text.$chat->nick : $text;
-			$text .= "\nDept:";
-			switch ($chat->dep_id) {
-							case 0:
-								$text .= " Something Went Wrong\n";
-								break;
-							case 1:
-								$text .= " Retail Support Team\n";
-								break;
-							case 2:
-								$text .= " Retail Sales Team\n";
-								break;
-							case 3:
-								$text .= " Wholesale Support Team\n";
-								break;
-							case 4:
-								$text .= " Wholesale Sales Team\n";
-								break;
-						}
-			$text .= "Message:".$params['msg']->msg."\n";
+			$text .= "\nDEPT:".$chat->department;
+			$text .= "\nMESSAGE:".$params['msg']->msg."\n";
+			$text .= "IP:". erLhcoreClassIPDetect::getIP()."\n";
+			$text .= 'https://' . $_SERVER['HTTP_HOST'] . erLhcoreClassDesign::baseurl('chat/accept').'/'.erLhcoreClassModelChatAccept::generateAcceptLink($chat);
 			$internalurl .= "&text=".urlencode($text);
             file_get_contents($internalurl);
         }
