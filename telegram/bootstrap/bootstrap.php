@@ -12,9 +12,10 @@ class erLhcoreClassExtensionTelegram {
 		
 		// Attatch event listeners
 		$dispatcher->listen('chat.chat_started', array($this,'telegram'));
+		$dispatcher->listen('chat.close',array($this,'chatClosed'));
 	}
 			 
-	public function telegram($params) {
+      public function telegram($params) {
 		
 		$text = "";
 		$receiver = "";
@@ -23,7 +24,8 @@ class erLhcoreClassExtensionTelegram {
 		$url = 'https://api.telegram.org/bot'.$conf['telegramBot'].'/sendMessage?parse_mode=Markdown';
 		$chat = $params['chat'];
 		
-      foreach ($conf['receivers'] as $receiver) {
+                      foreach ($conf['receivers'] as $receiver) 
+		      {
                         $internalurl = $url."&chat_id=xxxxxxxxx";
 			$text = "=== NEW CHAT REQUEST ===\nNAME: ";
 			$text = (isset($chat->nick)) ? $text.$chat->nick : $text;
@@ -32,9 +34,19 @@ class erLhcoreClassExtensionTelegram {
 			$text .= "IP:". erLhcoreClassIPDetect::getIP()."\n";
 			$text .= 'https://' . $_SERVER['HTTP_HOST'] . erLhcoreClassDesign::baseurl('chat/accept').'/'.erLhcoreClassModelChatAccept::generateAcceptLink($chat).'/'.$veryfyEmail.'/'.$receiver;
 			$internalurl .= "&text=".urlencode($text);
-            file_get_contents($internalurl);
-        }
+                        file_get_contents($internalurl);
+                      }
 
 	}
+	
+		public function chatClosed($params) {
+		// 
+		// 'chat' => & $chat, 		// Chat which was closed
+		// 'user_data' => $operator     // Operator who has closed a chat
+		// 
+		// 
+		//
+	}
+	
 
 }
